@@ -11,12 +11,14 @@ ent = []
 a = int(0)
 go = int(0)
 test1 = [] 
+StopPoint = 0
 
 def kep_pressed(event):
     global a
     global go
+    global StopPoint
     if (event.char == '\x08'):
-        if a > 0:
+        if a > StopPoint:
             a-=1
             ent[a]['text']=''
 
@@ -43,11 +45,19 @@ def kep_pressed(event):
                 ent[a-1]['text']
                 ]
         test1 = "".join(test1)
-        check(test1)
+        print(f"count1:{a}")
+        print(f"count2:{StopPoint}")
+        f = open("wordlist.txt","r", encoding="utf-8-sig")
+        if f"{test1}\n" in f.readlines():
+            check(test1)
+        f.close()      
 
 def check(word2):
     count1 = 0
-  
+    global StopPoint
+    StopPoint = a
+    print(a)
+    
     for x in word2:
         if x == word1[count1]:
             color = "green"
