@@ -1,75 +1,23 @@
 from tkinter import *
 from wordle import *
 
-word1 = wordR()
-print(word1)
-
 ent = []
-test1 = []
-
-a = int(0)
-go = int(0)
-StopPoint = int(0)
 
 gui = Tk()
 gui.geometry('600x700')
 
-# function get info from a key press
-def kep_pressed(event):
-    global a
-    global go
-    global StopPoint
-    global test1
 
-    if ( event.char == '\x08' ) and ( a > StopPoint ):
-        a-=1
-        ent[a]['text']=''
-        if a%5 < 5:
-            go = 0
-    elif ( event.char == '\r' ):
-        go = 0
+LabStatus1 = Label(gui,text = wordR(),bg="white",font="Arial 24",width=14, borderwidth=4, relief="solid")
 
-        test1 = [ 
-            ent[a-5]['text'],
-            ent[a-4]['text'],
-            ent[a-3]['text'],
-            ent[a-2]['text'],
-            ent[a-1]['text']
-        ]
-        test1 = "".join(test1)
-        check(test1)
-        #f = open("wordlist.txt","r", encoding="utf-8-sig")
-        #if f"{test1}\n" in f.readlines():
-            
-        #f.close()      
-    elif (not ( event.char == ' ' or len(event.keysym)>2 )) and ( go == 0 ):
-        ent[a]['text']=event.char.lower()
-        a+=1
-        if a%5 == 0 and a != 0:
-            go = 1
-
-# Function Check chars with colors
-def check(word2):
-    count1 = 0
-    global StopPoint
-    StopPoint = a
-    print(a)
-    
-    for x in word2:
-        if x == word1[count1]:
-            color = "green"
-        elif x in word1:
-            color = "yellow"
-        else:
-            color = "gray"
-        
-        ent[a-(5-count1)]['bg'] = color
-        count1 +=1
-    #if word1 == word2:
-    #    exit()
+# status for a word
+# @Jegor 
+text_frame = Frame(gui)
+text_frame.pack(pady=0)
+LabStatus = Label(text_frame,text = ' ',bg="white",font="Arial 24",width=14, borderwidth=4, relief="solid")
+LabStatus.grid(row=0,column=0)
 
 # Frame for Wordle blocks
-# @Jeagor and @Aleksasnder
+# @Jegor and @Aleksasnder
 wordle_frame = Frame(gui)
 wordle_frame.pack(pady=0)
 for i in range(30):
@@ -92,5 +40,13 @@ for row in alphabet_rows:
         button.pack(side=LEFT, padx=5)
         alphabet_buttons[letter] = button
 
-gui.bind('<Key>', kep_pressed)
+
+button_frame = Frame(gui)
+button_frame.pack(pady=0)
+BTN = Button(button_frame,text = 'menu',bg="white",font="Arial 24",width=4, borderwidth=4, relief="solid",command=lambda ent=ent, LabStatus1=LabStatus1,LabStatus=LabStatus: [WinWordleWindow(LabStatus1,ent,LabStatus) ])
+BTN.grid(row=0,column=0)
+
+#WinWordleWindow
+
+gui.bind('<Key>',lambda event, ent=ent, LabStatus1=LabStatus1,LabStatus=LabStatus:kep_pressed(event, LabStatus1, ent, LabStatus)) 
 gui.mainloop()
