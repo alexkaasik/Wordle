@@ -12,8 +12,9 @@ go = int(0)
 StopPoint = int(0)
 
 gui = Tk()
-gui.geometry('250x300')
+gui.geometry('600x700')
 
+# function get info from a key press
 def kep_pressed(event):
     global a
     global go
@@ -46,6 +47,8 @@ def kep_pressed(event):
         a+=1
         if a%5 == 0 and a != 0:
             go = 1
+
+# Function Check chars with colors
 def check(word2):
     count1 = 0
     global StopPoint
@@ -64,13 +67,30 @@ def check(word2):
         count1 +=1
     #if word1 == word2:
     #    exit()
-    
-for i in range(30):
-    ent.append(Label(gui,text = ' ',bg="white",font="Arial 24",width=1, borderwidth=4, relief="solid"))
 
+# Frame for Wordle blocks
+# @Jeagor and @Aleksasnder
+wordle_frame = Frame(gui)
+wordle_frame.pack(pady=0)
 for i in range(30):
-    ent[i].place(x = (50 * ( i % 5 )), y = (50 * (i // 5) ))
-    ent[i].place(height=40, width=40)
+    ent.append(Label(wordle_frame,text = ' ',bg="white",font="Arial 24",width=2, borderwidth=4, relief="solid"))
+    #ent[i].place(height=40, width=40)
+    #ent[i].place(x = (50 * ( i % 5 )), y = (50 * (i // 5) ))
+    ent[i].grid( row=( i // 5 ), column=( i%5 ), padx=5, pady=5)
+
+# Frame for key in a keyboard
+# @Jeagor
+alphabet_frame = Frame(gui)
+alphabet_frame.pack(pady=10)
+alphabet_rows = ["абвгдеёжзийклм", "нопрстуфхцчшщъ", "ыьэюя"]
+alphabet_buttons = {}
+for row in alphabet_rows:
+    row_frame = Frame(alphabet_frame)
+    row_frame.pack()
+    for letter in row:
+        button = Button(row_frame, text=letter, font=("Arial", 14), width=1, height=1, bg='white')
+        button.pack(side=LEFT, padx=5)
+        alphabet_buttons[letter] = button
 
 gui.bind('<Key>', kep_pressed)
 gui.mainloop()
