@@ -29,7 +29,6 @@ def WinWordleWindow(LabStatus1,ent,LabStatus):
     BTN_NewGame.grid(row=0,column=1)
     gui.mainloop()
 
-
 # reset Wordle
 def ClearWordle(LabStatus1,ent,LabStatus):
     global a
@@ -50,7 +49,9 @@ def kep_pressed(event,LabStatus1,ent,LabStatus):
     global go
     global StopPoint
     test1 = []
-    print(LabStatus1['text'])
+    #print(LabStatus1['text'])
+    #print(a)
+
     if ( event.char == '\x08' ) and ( a > StopPoint ):
         a-=1
         ent[a]['text']=''
@@ -89,7 +90,7 @@ def check(word2,LabStatus1,ent,LabStatus):
     for x in word2:
         if x == (LabStatus1['text'])[count1]:
             color = "green"
-        elif x in LabStatus1:
+        elif x in str(LabStatus1['text']):
             color = "yellow"
         else:
             color = "gray"
@@ -98,4 +99,6 @@ def check(word2,LabStatus1,ent,LabStatus):
         count1 +=1
     if LabStatus1['text'] == word2:
         LabStatus['text']='Win' 
+    elif a == 30:
+        LabStatus['text']='lose' 
         WinWordleWindow(LabStatus1,ent,LabStatus)
