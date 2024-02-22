@@ -6,7 +6,6 @@ ent = []
 gui = Tk()
 gui.geometry('600x700')
 
-
 LabStatus1 = Label(gui,text = wordR(),bg="white",font="Arial 24",width=14, borderwidth=4, relief="solid")
 
 # status for a word
@@ -27,7 +26,7 @@ for i in range(30):
     ent[i].grid( row=( i // 5 ), column=( i%5 ), padx=5, pady=5)
 
 # Frame for key in a keyboard
-# @Jeagor
+# @Jegor
 alphabet_frame = Frame(gui)
 alphabet_frame.pack(pady=10)
 alphabet_rows = ["абвгдеёжзийклм", "нопрстуфхцчшщъ", "ыьэюя"]
@@ -40,13 +39,10 @@ for row in alphabet_rows:
         button.pack(side=LEFT, padx=5)
         alphabet_buttons[letter] = button
 
-
 button_frame = Frame(gui)
 button_frame.pack(pady=0)
 BTN = Button(button_frame,text = 'menu',bg="white",font="Arial 24",width=4, borderwidth=4, relief="solid",command=lambda ent=ent, LabStatus1=LabStatus1,LabStatus=LabStatus: [WinWordleWindow(LabStatus1,ent,LabStatus) ])
 BTN.grid(row=0,column=0)
 
-#WinWordleWindow
-
-gui.bind('<Key>',lambda event, ent=ent, LabStatus1=LabStatus1,LabStatus=LabStatus:kep_pressed(event, LabStatus1, ent, LabStatus)) 
+gui.bind('<Key>',lambda event, ent=ent, LabStatus1=LabStatus1,LabStatus=LabStatus,alphabet_rows = alphabet_rows, alphabet_buttons = alphabet_buttons,:kep_pressed(event, LabStatus1, ent, LabStatus, alphabet_rows,alphabet_buttons))
 gui.mainloop()

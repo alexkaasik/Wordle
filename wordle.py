@@ -15,6 +15,7 @@ def wordR():
     Ra=randint(0,MaxF)
     word = (f.readlines())[Ra][:-1]
     f.close()
+    print(word)
     return word
 
 # Window Menu for new game and quits
@@ -44,7 +45,7 @@ def ClearWordle(LabStatus1,ent,LabStatus):
     LabStatus['text'] = ""
     
 # function get info from a key press
-def kep_pressed(event,LabStatus1,ent,LabStatus):
+def kep_pressed(event,LabStatus1,ent,LabStatus,alphabet_rows,alphabet_buttons):
     global a
     global go
     global StopPoint
@@ -69,7 +70,7 @@ def kep_pressed(event,LabStatus1,ent,LabStatus):
         test1 = "".join(test1)
         f = open("wordlist.txt","r", encoding="utf-8-sig")
         if f"{test1}\n" in f.readlines():
-            check(test1,LabStatus1,ent,LabStatus)
+            check(test1,LabStatus1,ent,LabStatus,alphabet_rows,alphabet_buttons)
         else:
             LabStatus['text']='word is not real' 
             go = 1
@@ -81,24 +82,31 @@ def kep_pressed(event,LabStatus1,ent,LabStatus):
             go = 1
     
 # Function Check chars with colors
-def check(word2,LabStatus1,ent,LabStatus):
+def check(word2,LabStatus1,ent,LabStatus,alphabet_rows,alphabet_buttons):
     global a
     global StopPoint
     StopPoint = a
     count1 = 0
-
+    LabStatus['text']=''
     for x in word2:
-        if x == (LabStatus1['text'])[count1]:
-            color = "green"
-        elif x in str(LabStatus1['text']):
-            color = "yellow"
-        else:
-            color = "gray"
-        
-        ent[a-(5-count1)]['bg'] = color
-        count1 +=1
+        for row in alphabet_rows:
+            for letter in row:
+
+                if ( x == letter  ):
+
+                    if x == (LabStatus1['text'])[count1]:
+                        color = "green"
+                    elif x in str(LabStatus1['text']):
+                        color = "yellow"
+                    else:
+                        color = "gray"
+
+                    (alphabet_buttons[letter])["bg"] = color
+                    ent[a-(5-count1)]['bg'] = color
+                    count1 +=1
     if LabStatus1['text'] == word2:
-        LabStatus['text']='Win' 
+        LabStatus['text']='Win'
+        WinWordleWindow(LabStatus1,ent,LabStatus)
     elif a == 30:
         LabStatus['text']='lose' 
         WinWordleWindow(LabStatus1,ent,LabStatus)
