@@ -12,7 +12,7 @@ LabStatus1 = Label(gui,text = wordR(),bg="white",font="Arial 24",width=14, borde
 # @Jegor 
 text_frame = Frame(gui)
 text_frame.pack(pady=0)
-LabStatus = Label(text_frame,text = ' ',bg="white",font="Arial 24",width=14, borderwidth=4, relief="solid")
+LabStatus = Label(text_frame,text = ' ',bg="white",font="Arial 24",width=20, borderwidth=4, relief="solid")
 LabStatus.grid(row=0,column=0)
 
 # Frame for Wordle blocks
@@ -41,8 +41,8 @@ for row in alphabet_rows:
 
 button_frame = Frame(gui)
 button_frame.pack(pady=0)
-BTN = Button(button_frame,text = 'menu',bg="white",font="Arial 24",width=4, borderwidth=4, relief="solid",command=lambda ent=ent, LabStatus1=LabStatus1,LabStatus=LabStatus: [WinWordleWindow(LabStatus1,ent,LabStatus) ])
+BTN = Button(button_frame,text = 'menu',bg="white",font="Arial 24",width=4, borderwidth=4, relief="solid",command=lambda ent=ent, LabStatus1=LabStatus1,LabStatus=LabStatus,alphabet_rows = alphabet_rows, alphabet_buttons = alphabet_buttons: [WinWordleWindow(LabStatus1,ent,LabStatus, alphabet_rows,alphabet_buttons) ])
 BTN.grid(row=0,column=0)
 
-gui.bind('<Key>',lambda event, ent=ent, LabStatus1=LabStatus1,LabStatus=LabStatus,alphabet_rows = alphabet_rows, alphabet_buttons = alphabet_buttons,:kep_pressed(event, LabStatus1, ent, LabStatus, alphabet_rows,alphabet_buttons))
+gui.bind('<Key>',lambda event, ent=ent, LabStatus1=LabStatus1,LabStatus=LabStatus,alphabet_rows = alphabet_rows, alphabet_buttons = alphabet_buttons:kep_pressed(event, LabStatus1, ent, LabStatus, alphabet_rows,alphabet_buttons))
 gui.mainloop()

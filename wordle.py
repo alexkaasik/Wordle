@@ -19,19 +19,19 @@ def wordR():
     return word
 
 # Window Menu for new game and quits
-def WinWordleWindow(LabStatus1,ent,LabStatus):
+def WinWordleWindow(LabStatus1,ent,LabStatus,alphabet_rows,alphabet_buttons):
     gui = Tk()
     gui.geometry('400x100')
     button_frame = Frame(gui)
     button_frame.pack(pady=0)
     BTN_Exit = Button(button_frame,text = 'Exit',bg="white",font="Arial 24",width=6, borderwidth=4, relief="solid",command=exit)
-    BTN_NewGame = Button(button_frame,text = 'New Game',bg="white",font="Arial 24",width=8, borderwidth=4, relief="solid",command=lambda ent=ent,LabStatus1=LabStatus1 ,LabStatus=LabStatus: ClearWordle(LabStatus1,ent,LabStatus) )
+    BTN_NewGame = Button(button_frame,text = 'New Game',bg="white",font="Arial 24",width=8, borderwidth=4, relief="solid",command=lambda ent=ent,LabStatus1=LabStatus1 ,LabStatus=LabStatus,alphabet_rows=alphabet_rows,alphabet_buttons=alphabet_buttons: ClearWordle(LabStatus1,ent,LabStatus,alphabet_rows,alphabet_buttons) )
     BTN_Exit.grid(row=0,column=0)
     BTN_NewGame.grid(row=0,column=1)
     gui.mainloop()
 
 # reset Wordle
-def ClearWordle(LabStatus1,ent,LabStatus):
+def ClearWordle(LabStatus1,ent,LabStatus,alphabet_rows,alphabet_buttons):
     global a
     global go
     global StopPoint
@@ -43,6 +43,9 @@ def ClearWordle(LabStatus1,ent,LabStatus):
         ent[i]['text'] = ""
     LabStatus1['text'] = wordR()
     LabStatus['text'] = ""
+    for row in alphabet_rows:
+            for letter in row:
+                (alphabet_buttons[letter])["bg"] = "white"
     
 # function get info from a key press
 def kep_pressed(event,LabStatus1,ent,LabStatus,alphabet_rows,alphabet_buttons):
@@ -106,7 +109,7 @@ def check(word2,LabStatus1,ent,LabStatus,alphabet_rows,alphabet_buttons):
                     count1 +=1
     if LabStatus1['text'] == word2:
         LabStatus['text']='Win'
-        WinWordleWindow(LabStatus1,ent,LabStatus)
+        WinWordleWindow(LabStatus1,ent,LabStatus,alphabet_rows,alphabet_buttons)
     elif a == 30:
-        LabStatus['text']='lose' 
-        WinWordleWindow(LabStatus1,ent,LabStatus)
+        LabStatus['text']=f"Lose. Word was {LabStatus1['text']}"
+        WinWordleWindow(LabStatus1,ent,LabStatus,alphabet_rows,alphabet_buttons)
